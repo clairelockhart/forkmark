@@ -1,16 +1,64 @@
-# React + Vite
+# Forkmark
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A mobile-first restaurant logging app — track places you've been and places you want to try, with ratings, notes, and tags. Built with React 19 + Vite, styled with Tailwind CSS, and backed by Supabase for auth and data.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Node.js (v18+ recommended)
+- A [Supabase](https://supabase.com) project (free tier is fine)
 
-## React Compiler
+## Setup
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. **Install dependencies**
 
-## Expanding the Oxlint configuration
+   ```bash
+   npm install
+   ```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+2. **Configure environment variables**
+
+   Copy the example env file and fill in your Supabase project credentials:
+
+   ```bash
+   cp .env.example .env.local
+   ```
+
+   Then edit `.env.local`:
+
+   ```
+   VITE_SUPABASE_URL=https://<project-id>.supabase.co
+   VITE_SUPABASE_ANON_KEY=sb_publishable_...
+   ```
+
+   You can find these values in your Supabase project under **Settings → API**.
+
+3. **Set up the database**
+
+   In your Supabase project, create a `restaurants` table with a `user_id` column referencing `auth.users`, plus columns for the restaurant fields (name, city, cuisine, status, rating, notes, dishes, would_return, tags, source, created_at, visited_at). Enable Row Level Security (RLS) so each user can only read/write their own rows.
+
+4. **Run the dev server**
+
+   ```bash
+   npm run dev
+   ```
+
+   The app will be available at [http://localhost:5173](http://localhost:5173).
+
+## Scripts
+
+| Command           | Description                          |
+| ------------------ | ------------------------------------ |
+| `npm run dev`       | Start the Vite dev server            |
+| `npm run build`     | Build for production                 |
+| `npm run preview`   | Preview the production build locally |
+| `npm run lint`      | Run oxlint                           |
+
+## Tech stack
+
+- React 19 + Vite
+- Tailwind CSS v3
+- React Router v7
+- Supabase (auth + Postgres)
+- Lucide React (icons)
+
+See `CLAUDE.md` for architecture notes.
